@@ -1,29 +1,133 @@
+/* === SLEEK MINIMAL FUTURISTIC TIC TAC TOE === */
+
 :root {
-    margin: 0;
-    padding: 0;
+  --bg-color: #0e0e11;
+  --surface: rgba(255, 255, 255, 0.05);
+  --frosted-glass: rgba(255, 255, 255, 0.08);
+  --border-color: rgba(255, 255, 255, 0.12);
+  --accent: #c3d0ff;
+  --text-color: #e5e7eb;
+  --font-family: "Inter", "Segoe UI", "Roboto", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: radial-gradient(circle at top, #15161a 0%, #0e0e11 100%);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  text-align: center;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
 }
 
+/* === HEADERS === */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* === DIFFICULTY SELECTION === */
+div > label {
+  margin: 0 0.5rem;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  transition: 0.3s ease;
+}
+
+div > input[type="radio"] {
+  margin-right: 1rem;
+  accent-color: var(--accent);
+}
+
+div > label:hover {
+  color: var(--accent);
+}
+
+/* === GAME GRID === */
 #game-grid {
-    display: grid;
-    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    gap: 3px;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 8px;
+  margin: 2rem 0;
+  padding: 10px;
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
 }
 
 .game-grid-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 8px solid black;
-    background-color: grey;
-    height: 150px;
-    width: 150px;
-    font-size: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--frosted-glass);
+  border: 1px solid var(--border-color);
+  height: 130px;
+  width: 130px;
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  transition: all 0.2s ease-in-out;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.game-grid-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+/* === RESET BUTTON === */
+#reset {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  padding: 0.7rem 2rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+#reset:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--accent);
+  transform: translateY(-1px);
+  cursor: pointer;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 500px) {
+  .game-grid-item {
+    height: 90px;
+    width: 90px;
+    font-size: 2.2rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
 }
