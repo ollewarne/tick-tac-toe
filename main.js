@@ -1,45 +1,17 @@
 import { checkVictory } from "./utils/checkVictory.js";
+import { Game } from "./components/gameLogic.js";
+import { TicTacToe } from "./components/game.js";
 
-class Game {
+let game = new Game("X", "O", 1)
 
-    constructor(playerOneMarker, playerTwoMarker, gameID) {
-        this.gameBoard = [["", "", ""],["", "", ""],["", "", ""]],
-        this.playerOne = playerOneMarker,
-        this.playerTwo = playerTwoMarker,
-        this.gameID = gameID,
-        this.turnCounter = 1
-    }
+function initialize() {
+    const gameMenu = new TicTacToe();
+    gameMenu.render()
 
-    renderGame() {
-        const gameGrid = document.querySelector("#game-grid");
-        gameGrid.replaceChildren("")
-        for (let row of this.gameBoard) {
-            for (let column = 0; column < row.length; column++) {
-                let item = document.createElement("div");
-                item.classList.add("game-grid-item");
-                item.id = `r${this.gameBoard.indexOf(row)}-c${column}`
-                item.addEventListener('click', (event) => {
-                    this.handleTurn(event)
-                })
-                gameGrid.appendChild(item)
-            }
-        }
-    }
-
-    handleTurn(event) {
-        if (this.turnCounter > 4) {
-            console.log("looking for victory")
-        }
-        if (this.turnCounter % 2 === 0) {
-            event.target.textContent = this.playerTwo;
-            event.target.style.color = "blue"
-        } else {
-            event.target.textContent = this.playerOne;
-            event.target.style.color = "green"
-        }
-        this.turnCounter++
-    }
+    const startButton = document.querySelector("#start-button");
+    startButton.addEventListener('click', () => {
+        game.renderGame()
+    })
 }
 
-let game1 = new Game("X", "O", 1);
-game1.renderGame();
+window.addEventListener("load", initialize);
