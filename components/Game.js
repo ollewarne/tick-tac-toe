@@ -11,6 +11,9 @@ export class Game {
         this.turnCounter = 1;
         this.gameRunning = false;
         this.opponentComputer = false;
+        this.hardComputer = false;
+
+        this.victory = false;
 
         this.boundTurnHandler = this.handleTurn.bind(this);
 
@@ -29,6 +32,7 @@ export class Game {
                 return;
             }
             if (!this.gameRunning) {
+                event.preventDefault();
                 this.startGame();
             } else this.resetGame();
         })
@@ -39,6 +43,16 @@ export class Game {
         this.generateGameGrid();
         this.gameUi.gameButton.textContent = "RESET";
         this.gameRunning = true;
+        if (this.gameUi.easy.checked) {
+            this.opponentComputer = true;
+            this.hardComputer = false;
+        } else if (this.gameUi.hard.checked) {
+            this.opponentComputer = true;
+            this.hardComputer = true;
+        } else {
+            this.hardComputer = false;
+            this.opponentComputer = false;
+        }
     }
 
     generateGameGrid() {
@@ -74,14 +88,28 @@ export class Game {
             if (win.type === "diagonal" && diagonalWinIds.includes(box.id)) box.classList.add("winning-line");
             if (win.type === "reverseDiagonal" && reverseDiagonalWinIds.includes(box.id)) box.classList.add("winning-line");
         }
+        this.victory = true;
     }
 
-    handlePlacingMarker(event, player) {
-        if (event.target.textContent) return;
+    easyComputer() {
+        this.gameUi.gameGrid.removeEventListener('click', this.boundTurnHandler);
+        console.log("test");
+        for (let i = 0; i < this.gameBoxes.length; i++) {
+            let randomIndex = Math.floor(Math.random() * this.gameBoxes.length);
+            if (!this.gameBoxes[randomIndex].textContent) {
+                this.gameUi.gameGrid.addEventListener('click', this.boundTurnHandler);
+                return this.gameBoxes[randomIndex];
+            }
+        }
+    }
 
-        event.target.textContent = player;
+    handlePlacingMarker(target, player) {
+        if (!target.id) target = target.target;
+        if (target.textContent) return;
 
-        let markerPlacement = event.target.id.split("-");
+        target.textContent = player;
+
+        let markerPlacement = target.id.split("-");
         let row = markerPlacement[0][1];
         let col = markerPlacement[1][1];
         if (!this.gameBoard[row][col]) this.gameBoard[row][col] = player;
@@ -90,6 +118,13 @@ export class Game {
 
     handleTurn(event) {
         if (event.target.className !== "game-grid-item") return;
+        if (this.opponentComputer) {
+            this.handlePlacingMarker(event, this.playerOne);
+            if (!this.victory) {
+                const computerTarget = this.easyComputer();
+                this.handlePlacingMarker(computerTarget, this.playerTwo);
+            }
+        }
         if (this.turnCounter % 2 === 0) {
             this.handlePlacingMarker(event, this.playerTwo);
         } else {
@@ -100,9 +135,10 @@ export class Game {
 
     resetGame() {
         this.gameUi.gameGrid.removeEventListener('click', this.boundTurnHandler);
+        this.gameUi.gameGrid.replaceChildren("");
         this.gameRunning = false;
         this.turnCounter = 1;
         this.gameUi.gameButton.textContent = "START";
-
+        this.gameUi.gameGrid.textContent = "Pick a difficulty and then click the start button to begin!";
     }
 }
