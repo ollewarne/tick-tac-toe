@@ -9,15 +9,25 @@ export class Game {
         this.playerOne = "X";
         this.playerTwo = "O";
         this.turnCounter = 1;
-        this.gameUi = new GameUi();
         this.gameRunning = false;
+        this.opponentComputer = false;
 
         this.boundTurnHandler = this.handleTurn.bind(this);
+
+        this.gameBoxes = [];
+
+        this.gameUi = new GameUi();
     }
 
     initUi() {
         this.gameUi.placeDomElement();
-        this.gameUi.gameButton.addEventListener('click', () => {
+        this.gameUi.gameButton.addEventListener('click', (event) => {
+            if (!this.gameUi.difficultySection.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                this.gameUi.difficultySection.reportValidity();
+                return;
+            }
             if (!this.gameRunning) {
                 this.startGame();
             } else this.resetGame();
@@ -39,6 +49,7 @@ export class Game {
                 let item = document.createElement("div");
                 item.className = "game-grid-item";
                 item.id = `r${this.gameBoard.indexOf(row)}-c${column}`
+                this.gameBoxes.push(item);
                 this.gameUi.gameGrid.appendChild(item)
             }
         }
@@ -50,7 +61,19 @@ export class Game {
     }
 
     checkForVictory(player) {
-        console.log(checkVictory(this.gameBoard, player))
+        const win = checkVictory(this.gameBoard, player);
+        if (!win) return;
+        const diagonalWinIds = ["r0-c0", "r1-c1", "r2-c2"];
+        const reverseDiagonalWinIds = ["r2-c0", "r1-c1", "r0-c2"];
+        for (let box of this.gameBoxes) {
+            // the id for each box has this format "rx-cx", where x == the index for either the row or column
+            let row = parseInt(box.id[1]);
+            let col = parseInt(box.id[4]);
+            if (win.type === "row" && row === win.row) box.classList.add("winning-line");
+            if (win.type === "column" && col === win.column) box.classList.add("winning-line");
+            if (win.type === "diagonal" && diagonalWinIds.includes(box.id)) box.classList.add("winning-line");
+            if (win.type === "reverseDiagonal" && reverseDiagonalWinIds.includes(box.id)) box.classList.add("winning-line");
+        }
     }
 
     handlePlacingMarker(event, player) {
@@ -66,7 +89,6 @@ export class Game {
     }
 
     handleTurn(event) {
-        console.log(this.gameBoard)
         if (event.target.className !== "game-grid-item") return;
         if (this.turnCounter % 2 === 0) {
             this.handlePlacingMarker(event, this.playerTwo);
