@@ -1,5 +1,3 @@
-/* === SLEEK MINIMAL FUTURISTIC TIC TAC TOE === */
-
 :root {
   --bg-color: #0e0e11;
   --surface: rgba(255, 255, 255, 0.05);
@@ -19,7 +17,6 @@
 body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
   background: radial-gradient(circle at top, #15161a 0%, #0e0e11 100%);
@@ -28,9 +25,10 @@ body {
   text-align: center;
   letter-spacing: 0.5px;
   backdrop-filter: blur(10px);
+  margin-top: 3em;
+  gap: 1em;
 }
 
-/* === HEADERS === */
 h1 {
   font-size: 2.5rem;
   font-weight: 600;
@@ -45,24 +43,23 @@ h2 {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* === DIFFICULTY SELECTION === */
-div > label {
+form > label {
   margin: 0 0.5rem;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.7);
   transition: 0.3s ease;
 }
 
-div > input[type="radio"] {
+form > input[type="radio"] {
   margin-right: 1rem;
   accent-color: var(--accent);
+  cursor: pointer;
 }
 
-div > label:hover {
+form > label:hover {
   color: var(--accent);
 }
 
-/* === GAME GRID === */
 #game-grid {
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
@@ -74,6 +71,8 @@ div > label:hover {
   border: 1px solid var(--border-color);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(20px);
+  place-items: center;
+  aspect-ratio: 1/1;
 }
 
 .game-grid-item {
@@ -98,8 +97,12 @@ div > label:hover {
   cursor: pointer;
 }
 
-/* === RESET BUTTON === */
-#reset {
+.game-grid-item.winning-line {
+  background: blue;
+}
+
+
+#game-button {
   background: var(--surface);
   border: 1px solid var(--border-color);
   color: var(--text-color);
@@ -112,14 +115,13 @@ div > label:hover {
   letter-spacing: 2px;
 }
 
-#reset:hover {
+#game-button:hover {
   background: rgba(255, 255, 255, 0.15);
   color: var(--accent);
   transform: translateY(-1px);
   cursor: pointer;
 }
 
-/* === RESPONSIVE === */
 @media (max-width: 500px) {
   .game-grid-item {
     height: 90px;
