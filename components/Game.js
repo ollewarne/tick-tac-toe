@@ -93,7 +93,6 @@ export class Game {
 
     easyComputer() {
         this.gameUi.gameGrid.removeEventListener('click', this.boundTurnHandler);
-        console.log("test");
         for (let i = 0; i < this.gameBoxes.length; i++) {
             let randomIndex = Math.floor(Math.random() * this.gameBoxes.length);
             if (!this.gameBoxes[randomIndex].textContent) {
