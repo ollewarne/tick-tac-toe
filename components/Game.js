@@ -1,5 +1,6 @@
 import { GameUi } from "./GameUi.js";
 import { checkVictory } from "../utils/checkVictory.js";
+import { bestMove } from "../utils/minimax.js";
 
 export class Game {
 
@@ -120,8 +121,13 @@ export class Game {
         if (this.opponentComputer) {
             this.handlePlacingMarker(event, this.playerOne);
             if (!this.victory) {
-                const computerTarget = this.easyComputer();
-                this.handlePlacingMarker(computerTarget, this.playerTwo);
+                if (this.hardComputer) {
+                    let bestMoveIndex = bestMove(this.gameBoxes, this.playerTwo, this.playerOne);
+                    this.handlePlacingMarker(this.gameBoxes[bestMoveIndex], this.playerTwo);
+                } else {
+                    const computerTarget = this.easyComputer();
+                    this.handlePlacingMarker(computerTarget, this.playerTwo);
+                }
             }
         }
         if (this.turnCounter % 2 === 0) {
