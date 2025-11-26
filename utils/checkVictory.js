@@ -19,7 +19,7 @@ export function checkVictory(arr, marker) {
                 type: "diagonal", rowStart: arrIndex, rowEnd: arrIndex + 2, columnStart: i, columnEnd: i + 2
             }
 
-            if (i === 2 && arr[arrIndex + 1][i - 1] === row[i] && arr[arrIndex + 2][i - 2] === row[i]) return {
+            if (arrIndex === 0 && arr[arrIndex + 1][i - 1] === row[i] && arr[arrIndex + 2][i - 2] === row[i]) return {
                 type: "reverseDiagonal", rowStart: arrIndex, rowEnd: arrIndex + 2, columnStart: i, columnEnd: i - 2
             }
         }
