@@ -15,9 +15,9 @@ export class GameUi {
 
         this.element.appendChild(this.difficultySection);
 
-        this.createOption("easy", "EASY");
-        this.createOption("hard", "HARD");
-        this.createOption("two-players", "TWO PLAYERS");
+        this.easy = this.createOption("easy", "EASY");
+        this.hard = this.createOption("hard", "HARD");
+        this.twoPlayer = this.createOption("two-players", "TWO PLAYERS");
 
         this.gameButton = document.createElement("button");
         this.gameButton.id = "game-button";
@@ -43,6 +43,7 @@ export class GameUi {
 
         this.difficultySection.appendChild(label);
         this.difficultySection.appendChild(input);
+        return input;
     };
 
     placeDomElement(parent = document.body) {
