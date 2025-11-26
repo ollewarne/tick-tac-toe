@@ -12,21 +12,20 @@ export class GameUi {
         this.subtitle.textContent = "What difficulty?";
         this.difficultySection.appendChild(this.subtitle);
 
+        this.element.appendChild(this.difficultySection);
 
         this.createOption("easy", "EASY");
         this.createOption("hard", "HARD");
         this.createOption("two-players", "TWO PLAYERS");
 
-        this.element.appendChild(difficultySection);
+        this.gameButton = document.createElement("button");
+        this.gameButton.id = "game-button";
+        this.gameButton.textContent = "START"
+        this.element.appendChild(this.gameButton);
 
         this.gameGrid = document.createElement("div");
-        this.gameGrid.id = "game-grid";
         this.element.appendChild(this.gameGrid);
-
-        this.startButton = document.createElement("button");
-        this.startButton.id = "start-button";
-        this.startButton.textContent = "START"
-        this.element.appendChild(startButton);
+        this.gameGrid.textContent = "Pick a difficulty and then click the start button to begin!";
     }
 
     createOption (id, labelText) {
@@ -39,8 +38,8 @@ export class GameUi {
         input.name = "difficulty";
         input.type = "radio";
 
-        difficultySection.appendChild(label);
-        difficultySection.appendChild(input);
+        this.difficultySection.appendChild(label);
+        this.difficultySection.appendChild(input);
     };
 
     placeDomElement(parent = document.body) {
