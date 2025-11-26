@@ -6,7 +6,8 @@ export class GameUi {
         this.title.textContent = "Tic Tac Toe";
         this.element.appendChild(this.title);
 
-        this.difficultySection = document.createElement("div");
+        this.difficultySection = document.createElement("form");
+        this.difficultySection.id = "difficulty-form";
 
         this.subtitle = document.createElement("h2");
         this.subtitle.textContent = "What difficulty?";
@@ -21,6 +22,7 @@ export class GameUi {
         this.gameButton = document.createElement("button");
         this.gameButton.id = "game-button";
         this.gameButton.textContent = "START"
+        this.gameButton.setAttribute("form", "difficulty-form");
         this.element.appendChild(this.gameButton);
 
         this.gameGrid = document.createElement("div");
@@ -37,6 +39,7 @@ export class GameUi {
         input.id = id;
         input.name = "difficulty";
         input.type = "radio";
+        input.setAttribute("required", "true");
 
         this.difficultySection.appendChild(label);
         this.difficultySection.appendChild(input);
