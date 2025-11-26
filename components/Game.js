@@ -1,3 +1,4 @@
+import { GameUi } from "./GameUi.js";
 export class Game {
 
     constructor(playerOneMarker, playerTwoMarker, gameID) {
@@ -6,9 +7,10 @@ export class Game {
         this.playerTwo = playerTwoMarker,
         this.gameID = gameID,
         this.turnCounter = 1
+        this.gameUi = new GameUi();
     }
 
-    renderGame() {
+    init() {
         const gameGrid = document.querySelector("#game-grid");
         gameGrid.replaceChildren("")
         for (let row of this.gameBoard) {
