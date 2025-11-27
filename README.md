@@ -22,3 +22,5 @@ As this was a project I used to learn, I tried to use classes as much as possibl
 - End of game screen
 - Better reset function so you don't have to click twice
 - Allow for switching who goes first
+- Accesibility
+- Play sounds when making moves and when game ends
